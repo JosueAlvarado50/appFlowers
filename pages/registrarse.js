@@ -1,24 +1,43 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import { BotonIniciarSesion, CampoFormulario } from "../components/Botones";
-import React, {useState} from "react";
-import axios from 'axios'
+import React, { useState } from "react";
+import axios from "axios";
 
-//import { useNavigate } from 'react-router-dom' 
+//import { useNavigate } from 'react-router-dom'
 
-const endpoint = 'http://localhost:8000/api/usuario'
+const endpoint = "http://localhost:8000/api/usuario";
 
-const registrarse = () => {
-  const [nombre, setNombre] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState('')
-  const [telefono, setTelefono] = useState('')
+const Registrarse = () => {
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [telefono, setTelefono] = useState("");
 
-  const addlibro = async() => {
-    const obj = {nombre, email, password, telefono}
-    const {data} = await axios.post(endpoint, obj)
-    console.log(data)
-    
-  }
+  const [value, setValue] = useState({
+    nombre: "",
+    email: "",
+    password: "",
+    telefono: "",
+  });
+
+  const addUser = async () => {
+    const request = {};
+    request.nombre = value.nombre;
+    request.email = value.email;
+    request.password = value.password;
+    request.telefono = value.telefono;
+
+    const obj = { nombre, email, password, telefono };
+    const { data } = await axios.post(endpoint, request, {
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": '*',
+        'Access-Control-Allow-Headers': '*'
+      },
+    });
+    console.log(data);
+  };
 
   /*  const [nombre, setNombre] = useState('')
     const [email, setEmail] = useState('')
@@ -44,31 +63,31 @@ const registrarse = () => {
       </Text>
 
       <CampoFormulario
-      onChangeText={text=> setNombre(text)}
-      value= {nombre}
+        onChangeText={(text) => setValue({ ...value, nombre: text })}
+        value={nombre}
         placeholder="Ingresa tu nombre..."
         text="Nombre: "
       ></CampoFormulario>
       <CampoFormulario
-      onChangeText={text=> setEmail(text)}
-      value= {email}
+        onChangeText={(text) => setValue({ ...value, email: text })}
+        value={email}
         placeholder="Ingresa tu email..."
         text="Email: "
       ></CampoFormulario>
       <CampoFormulario
-      onChangeText={text=> setPassword(text)}
-      value= {password}
+        onChangeText={(text) => setValue({ ...value, password: text })}
+        value={password}
         placeholder="Ingresa una contraseña..."
         text="Contraseña: "
       ></CampoFormulario>
       <CampoFormulario
-      onChangeText={text=> setTelefono(text)}
-      value= {telefono}
+        onChangeText={(text) => setValue({ ...value, telefono: text })}
+        value={telefono}
         placeholder="Ingresa tu número telefonico..."
         text="Telefono: "
       ></CampoFormulario>
 
-      <BotonIniciarSesion onPress={addlibro} text="Registrate" />
+      <BotonIniciarSesion onPress={addUser} text="Registrate" />
     </View>
   );
 };
@@ -96,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default registrarse;
+export default Registrarse;

@@ -11,7 +11,7 @@ import misPlantas from "../pages/misPlantas";
 import MenuBotonItem from "../components/MenuBotonItem";
 import { BotonCerrarSesion } from "../components/Botones";
 import pantallaPrincipal from "../pages/pantallaPrincipal";
-import registrarse from "../pages/registrarse";
+import registrarse from "../pages/Registrarse";
 import login from "../pages/login";
 
 const drawer = createDrawerNavigator();
